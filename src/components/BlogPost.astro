@@ -1,0 +1,46 @@
+astro
+---
+export interface Props {
+  post: {
+    id: number;
+    created_at: string;
+    collection: string;
+    title: string;
+    page_id: string;
+    content: string;
+    date: string;
+    tags: string;
+    author: string;
+    status: string;
+    synctime: string;
+    views: number;
+  };
+}
+
+const { post } = Astro.props;
+const siteAddress = "https://4321-idx-my-blog-1717385807167.cluster-nx3nmmkbnfe54q3dd4pfbgilpc.cloudworkstations.dev"; // Replace with your actual site address
+---
+
+<a href={siteAddress + "/" + post.id}> 
+  <article class="card"> 
+    <h2>{post.title}</h2>
+    <p class="meta">By {post.author} | {post.date}</p>
+  </article>
+</a>
+
+<style>
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 20px; 
+    cursor: pointer; /* Add cursor pointer to indicate clickability */
+  }
+
+  .meta {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 10px;
+  }
+</style>

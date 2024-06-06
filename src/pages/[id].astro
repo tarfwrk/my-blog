@@ -1,0 +1,32 @@
+astro
+---
+import BlogPost from '../components/BlogPost.astro';
+
+export async function getStaticPaths() {
+  const posts = await fetch('https://tarhub.nuxt.dev/api/parp')
+    .then(res => res.json());
+
+  return posts.map(post => ({
+    params: { id: post.id.toString() },
+  }));
+}
+
+const { id } = Astro.params;
+const post = await fetch(`https://tarhub.nuxt.dev/api/parp/id/${id}`)
+  .then(res => res.json());
+---
+
+<html>
+  <head>
+    <title>{post.title}</title>
+  </head>
+  <body class="bg-gray-100 font-sans"> 
+    <div class="container mx-auto p-8 max-w-3xl"> 
+      <h1 class="text-3xl font-bold mb-4 text-gray-800">{post.title}</h1>
+      <p class="text-gray-600 mb-2">By {post.author} | {post.date}</p> 
+      <div class="prose text-gray-700 leading-relaxed" set:html={post.content}>
+        {/* HTML content will be rendered here */}
+      </div>
+    </div>
+  </body>
+</html>
